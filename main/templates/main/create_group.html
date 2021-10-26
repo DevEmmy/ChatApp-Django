@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+	Create Group
+{% endblock %}
+
+
+{% block header %}
+		<h1><a href="{% url 'group_list' %}">&leftarrow;</a></h1>
+{% endblock %}
+
+
+{% block content %}
+<form action="{% url 'create_group' %}" method="POST" class="auth">
+	{% csrf_token %}
+	<!-- {{ form.as_ul }} -->
+	<input type="text" name="group_name" placeholder="Group">
+	<input type="hidden" name="slug" value="slug">
+	<input type="submit" value="submit">
+</form>
+{% endblock %}
+

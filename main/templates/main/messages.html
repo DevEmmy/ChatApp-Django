@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+	{{ group }}
+{% endblock %}
+
+{% block header %}
+		<h1><a href="{% url 'group_list' %}">&leftarrow;</a></h1>
+{% endblock %}
+
+{% block content %}
+<h2>{{ group.group_name|title }}</h2>
+
+{% if messages %}
+<div class="messages">
+	{% for message in messages %}
+	{% if message.sender == request.user %}
+		<div class="my-message">
+			<p class="sender">{{ message.sender |title }}</p>
+		 <p class="content"> {{ message.content }}</p> 
+		 <p class="time_sent"> {{ message.time_sent }}</p>
+		</div>
+	{% else%}
+	<div class="message">
+			<p class="sender">{{ message.sender |title }}</p>
+		 <p class="content"> {{ message.content }}</p> 
+		 <p class="time_sent"> {{ message.time_sent }}</p>
+		</div>
+	{% endif %}
+{% endfor %}
+{% else %}
+<p>Be the first to send a message here</p>
+{% endif %}
+
+</div>
+
+
+<form action="{% url 'send_message' group.slug %}" method="POST" class="send">
+	{% csrf_token %}
+	<input type="text" name="content">
+	<input type="hidden" name="group_belong" value="{{ group.id }}">
+	<input type="hidden" name="sender" value="{{ request.user.id }}">
+	<input type="submit" value=">">
+</form>
+{% endblock %}
+
+

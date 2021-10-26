@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+	Homepage
+{% endblock %}
+
+{% block header %}
+		<h3>{{ request.user|title}}</h3>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'create_group' %}" class="add-group">+</a>
+{% if groups%}
+
+<div class="group">
+{% for group in groups %}
+	<a href="{% url 'messages' group.slug %}"><div>
+{{ group.group_name|title }}</div></a>
+{% endfor %}
+{% else %}
+<h3> There's no group yet, create one!</h3>
+{% endif %}
+
+
+{% endblock %}
+
